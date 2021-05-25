@@ -18,7 +18,6 @@ class App extends React.Component {
   handleOnChangeType = e => {
     this.setState({
       filters: {
-        ...this.state.filters,
         type: e 
       }
     })
@@ -27,17 +26,16 @@ class App extends React.Component {
   findPets = () => {
     let url = '/api/pets'
 
-    if(this.state.filters === 'all') {
-      url += `?type=all`
-    }
-    else {
+    if(this.state.filters.type !== 'all') {
       url += `?type=${this.state.filters.type}`
     }
+
 
     fetch(url)
     .then(resp => resp.json())
     .then(pets => {
-      this.setState({pets})
+      console.log(pets)
+      this.setState({pets}, () => console.log(this.state))
     })
   }
 
